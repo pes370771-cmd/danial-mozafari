@@ -279,6 +279,21 @@
     return BRAND_ICONS[name] ? BRAND_ICONS[name].replace('CLASS', cls) : `<i data-lucide="${name}" class="${cls}"></i>`;
   }
 
+  // t.me links normally open Telegram's own web landing page first.
+  // This tries the native app via the tg:// scheme, and falls back to
+  // the regular web link only if the app didn't take over (not installed).
+  function openTelegram(evt, webUrl) {
+    evt.preventDefault();
+    const username = webUrl.split('t.me/')[1].replace(/\/$/, '');
+    const started = Date.now();
+    window.location.href = 'tg://resolve?domain=' + username;
+    setTimeout(() => {
+      if (Date.now() - started < 2000 && !document.hidden) {
+        window.location.href = webUrl;
+      }
+    }, 1200);
+  }
+
   document.getElementById('hero-tagline').textContent = CONFIG.identity.tagline;
   document.getElementById('hero-subline').textContent = CONFIG.identity.subline || '';
   document.getElementById('footer-name').textContent = '© ' + new Date().getFullYear() + ' ' + CONFIG.identity.name;
@@ -288,7 +303,11 @@
     const isTelegram = p.href.includes('t.me/');
     const card = document.createElement('a');
     card.href = p.href;
-    if (!isTelegram) { card.target = '_blank'; card.rel = 'noreferrer'; }
+    if (isTelegram) {
+      card.addEventListener('click', (e) => openTelegram(e, p.href));
+    } else {
+      card.target = '_blank'; card.rel = 'noreferrer';
+    }
     card.className = 'tilt-card reveal group relative block rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl overflow-hidden p-6';
     card.style.transitionDelay = (i * 60) + 'ms';
     card.innerHTML = `
@@ -358,7 +377,11 @@
   CONFIG.platforms.forEach(p => {
     const a = document.createElement('a');
     a.href = p.href;
-    if (!p.href.includes('t.me/')) { a.target = '_blank'; a.rel = 'noreferrer'; }
+    if (p.href.includes('t.me/')) {
+      a.addEventListener('click', (e) => openTelegram(e, p.href));
+    } else {
+      a.target = '_blank'; a.rel = 'noreferrer';
+    }
     a.setAttribute('aria-label', p.label);
     a.className = 'text-white/40 hover:text-teal-300 transition-colors';
     a.innerHTML = iconHTML(p.icon, 'w-5 h-5');
