@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23090b10'/%3E%3Cpath d='M16 6 L25 11 V21 L16 26 L7 21 V11 Z' stroke='%235eead4' stroke-width='1.4' fill='none'/%3E%3Ccircle cx='16' cy='16' r='2' fill='%235eead4'/%3E%3C/svg%3E" />
+
+<title>Your Name — Software Developer</title>
+<meta name="description" content="Software developer building automation systems and digital products. Projects, technology stack, and every active platform in one place." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Your Name — Software Developer" />
+<meta property="og:description" content="Software developer building automation systems and digital products." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { background:#090b10; font-family:'Inter',ui-sans-serif,system-ui,sans-serif; }
+  .font-display { font-family:'Space Grotesk',ui-sans-serif,system-ui,sans-serif; }
+  .font-mono { font-family:'JetBrains Mono',ui-monospace,monospace; }
+  ::selection { background:rgba(94,234,212,.3); color:#fff; }
+
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  .tilt-card { transition: transform .3s ease; transform-style: preserve-3d; }
+  .tilt-glow { opacity:0; transition:opacity .3s ease; }
+  .tilt-card:hover .tilt-glow { opacity:1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity:1 !important; transform:none !important; transition:none !important; }
+    .tilt-card { transform:none !important; }
+  }
+</style>
+</head>
+<body class="bg-[#090b10] text-white antialiased selection:bg-teal-300/30">
+
+<!-- ============================================================
+     EDIT YOUR CONTENT HERE — everything else in this file just
+     renders whatever you put in this one object. Change the
+     values, save, commit — that's it. No build step, no npm.
+     To add a new platform: copy one line inside `platforms` and
+     change the icon name (any name from https://lucide.dev/icons),
+     label, detail text and href.
+============================================================= -->
+<script>
+  const CONFIG = {
+    identity: {
+      name: "Danial Mozafari",
+      tagline: "Python Developer | Automation & AI Enthusiast | Building Real-World Projects",
+      subline: "Currently focused on automation, AI-assisted workflows, and developer tooling."
+    },
+    platforms: [
+      { icon: "send",           label: "Telegram",  detail: "Channel",              href: "https://t.me/DMio_officail" },
+      { icon: "message-circle", label: "Message Me",detail: "Direct on Telegram",   href: "https://t.me/danial_mozafarii" },
+      { icon: "github",         label: "GitHub",    detail: "Code & repos",         href: "https://github.com/pes370771-cmd" },
+      { icon: "linkedin",       label: "LinkedIn",  detail: "Professional network", href: "https://www.linkedin.com/in/danial-mozafari-3473a7425/" },
+      { icon: "instagram",      label: "Instagram", detail: "Visual updates",       href: "https://instagram.com/dm.io1" }
+      // Add more here, e.g.:
+      // { icon: "twitter", label: "X / Twitter", detail: "Threads & updates", href: "https://x.com/yourusername" },
+    ],
+    focus: [
+      "Building software solutions end to end",
+      "Exploring automation workflows",
+      "Experimenting with AI-assisted tooling"
+    ],
+    goals: [
+      "Ship production-grade tools, not prototypes",
+      "Deepen expertise across the automation stack",
+      "Create digital products people actually rely on"
+    ],
+    skills: [
+      "System design",
+      "API integration",
+      "Workflow automation",
+      "Clean, maintainable code"
+    ],
+    techStack: [
+      { icon: "code-2",     label: "Python" },
+      { icon: "boxes",      label: "Automation" },
+      { icon: "sparkles",   label: "AI" },
+      { icon: "git-branch", label: "Git" },
+      { icon: "github",     label: "GitHub" },
+      { icon: "globe",      label: "Web Technologies" },
+      { icon: "cpu",        label: "APIs" },
+      { icon: "database",   label: "Databases" }
+    ],
+    projects: [
+      {
+        name: "Project One",
+        description: "Short description of what this project does and the problem it solves.",
+        tech: ["Python", "n8n", "API"],
+        repoUrl: "https://github.com/yourusername/project-one",
+        liveUrl: ""
+      },
+      {
+        name: "Project Two",
+        description: "Short description of what this project does and the problem it solves.",
+        tech: ["JavaScript", "Automation"],
+        repoUrl: "https://github.com/yourusername/project-two",
+        liveUrl: "https://example.com"
+      },
+      {
+        name: "Project Three",
+        description: "Short description of what this project does and the problem it solves.",
+        tech: ["React", "TypeScript"],
+        repoUrl: "",
+        liveUrl: ""
+      }
+    ],
+    contact: {
+      email: "danialmozafari12@gmail.com",
+      note: "Open to collaboration and interesting technical problems."
+    }
+  };
+</script>
+<!-- ======================= end of editable content ======================= -->
+
+<nav class="fixed top-0 inset-x-0 z-40">
+  <div class="mx-auto max-w-6xl px-6 py-5 flex items-center justify-between">
+    <a href="#top" class="font-mono text-sm text-white/80 tracking-tight flex items-center gap-2">
+      <i data-lucide="terminal" class="w-4 h-4 text-teal-300"></i>
+      <span class="opacity-60">~/</span>identity
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-sm font-mono text-white/50">
+      <a href="#platforms" class="hover:text-white transition-colors">platforms</a>
+      <a href="#profile" class="hover:text-white transition-colors">profile</a>
+      <a href="#stack" class="hover:text-white transition-colors">stack</a>
+      <a href="#projects" class="hover:text-white transition-colors">projects</a>
+      <a href="#contact" class="hover:text-white transition-colors">contact</a>
+    </div>
+  </div>
+</nav>
+
+<section id="top" class="relative min-h-[100svh] flex items-center overflow-hidden">
+  <div id="hero-canvas" class="absolute inset-0"></div>
+  <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#090b10_75%)]"></div>
+
+  <div class="relative z-10 mx-auto max-w-6xl px-6 w-full">
+    <div class="flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase font-mono text-teal-300/70 mb-4">
+      <span class="h-1.5 w-1.5 rounded-full bg-teal-300/80 shadow-[0_0_8px_2px_rgba(94,234,212,0.6)]"></span>
+      digital identity / online
+    </div>
+    <h1 id="hero-name" class="font-display text-5xl sm:text-6xl md:text-7xl font-medium tracking-tight text-white leading-[1.05]"></h1>
+    <p id="hero-tagline" class="mt-6 max-w-xl text-lg sm:text-xl text-white/70 leading-relaxed"></p>
+    <p id="hero-subline" class="mt-3 max-w-xl text-sm font-mono text-teal-300/60"></p>
+
+    <div class="mt-10 flex flex-wrap items-center gap-4">
+      <a href="#platforms" class="inline-flex items-center gap-2 rounded-full bg-white text-[#090b10] px-6 py-3 text-sm font-medium tracking-tight hover:bg-teal-200 transition-colors">View platforms</a>
+      <a href="#projects" class="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-medium tracking-tight text-white/80 hover:text-white hover:border-white/30 transition-colors">See projects</a>
+    </div>
+  </div>
+
+  <a href="#platforms" class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-white/40 hover:text-white/70 transition-colors animate-bounce" aria-label="Scroll to platforms">
+    <i data-lucide="chevron-down" class="w-6 h-6"></i>
+  </a>
+</section>
+
+<section id="platforms" class="relative py-28 px-6">
+  <div class="mx-auto max-w-6xl">
+    <div class="reveal">
+      <div class="flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase font-mono text-teal-300/70 mb-4">
+        <span class="h-1.5 w-1.5 rounded-full bg-teal-300/80 shadow-[0_0_8px_2px_rgba(94,234,212,0.6)]"></span>
+        access points
+      </div>
+      <h2 class="font-display text-3xl sm:text-4xl text-white tracking-tight mb-2">Where to find me</h2>
+      <p class="text-white/50 max-w-lg mb-12">Every platform I actively maintain, routed from one place. New ones get added here as they go live.</p>
+    </div>
+    <div id="platforms-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+  </div>
+</section>
+
+<section id="profile" class="relative py-28 px-6">
+  <div class="mx-auto max-w-6xl">
+    <div class="reveal">
+      <div class="flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase font-mono text-teal-300/70 mb-4">
+        <span class="h-1.5 w-1.5 rounded-full bg-teal-300/80 shadow-[0_0_8px_2px_rgba(94,234,212,0.6)]"></span>
+        profile
+      </div>
+      <h2 class="font-display text-3xl sm:text-4xl text-white tracking-tight mb-12">Current focus, and where it's headed</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="reveal rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-7">
+        <div class="flex items-center gap-2 text-white/80 mb-5"><i data-lucide="cpu" class="w-4 h-4 text-teal-300"></i><span class="font-mono text-xs tracking-[0.15em] uppercase">Current focus</span></div>
+        <ul id="focus-list" class="space-y-3"></ul>
+      </div>
+      <div class="reveal rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-7">
+        <div class="flex items-center gap-2 text-white/80 mb-5"><i data-lucide="sparkles" class="w-4 h-4 text-teal-300"></i><span class="font-mono text-xs tracking-[0.15em] uppercase">Future goals</span></div>
+        <ul id="goals-list" class="space-y-3"></ul>
+      </div>
+      <div class="reveal rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-7">
+        <div class="flex items-center gap-2 text-white/80 mb-5"><i data-lucide="code-2" class="w-4 h-4 text-teal-300"></i><span class="font-mono text-xs tracking-[0.15em] uppercase">Core skills</span></div>
+        <ul id="skills-list" class="space-y-3"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stack" class="relative py-28 px-6">
+  <div class="mx-auto max-w-6xl">
+    <div class="reveal">
+      <div class="flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase font-mono text-teal-300/70 mb-4">
+        <span class="h-1.5 w-1.5 rounded-full bg-teal-300/80 shadow-[0_0_8px_2px_rgba(94,234,212,0.6)]"></span>
+        technology stack
+      </div>
+      <h2 class="font-display text-3xl sm:text-4xl text-white tracking-tight mb-12">Tools of the trade</h2>
+    </div>
+    <div id="stack-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+  </div>
+</section>
+
+<section id="projects" class="relative py-28 px-6">
+  <div class="mx-auto max-w-6xl">
+    <div class="reveal">
+      <div class="flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase font-mono text-teal-300/70 mb-4">
+        <span class="h-1.5 w-1.5 rounded-full bg-teal-300/80 shadow-[0_0_8px_2px_rgba(94,234,212,0.6)]"></span>
+        projects
+      </div>
+      <h2 class="font-display text-3xl sm:text-4xl text-white tracking-tight mb-2">Selected work</h2>
+      <p class="text-white/50 max-w-lg mb-12">Add, remove, or edit entries in the <code class="font-mono text-teal-300/70">CONFIG.projects</code> list near the top of this file.</p>
+    </div>
+    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+  </div>
+</section>
+
+<section id="contact" class="relative py-28 px-6">
+  <div class="mx-auto max-w-4xl">
+    <div class="reveal rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-10 sm:p-14 text-center relative overflow-hidden">
+      <div class="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-72 w-72 rounded-full bg-teal-300/10 blur-3xl"></div>
+      <div class="relative z-10">
+        <div class="flex items-center justify-center gap-2 text-[11px] tracking-[0.2em] uppercase font-mono text-teal-300/70 mb-4">
+          <span class="h-1.5 w-1.5 rounded-full bg-teal-300/80 shadow-[0_0_8px_2px_rgba(94,234,212,0.6)]"></span>
+          connect()
+        </div>
+        <h2 class="font-display text-3xl sm:text-4xl text-white tracking-tight mb-4">Let's talk</h2>
+        <p id="contact-note" class="text-white/60 max-w-md mx-auto mb-9"></p>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <a id="contact-email" href="#" class="inline-flex items-center gap-2 rounded-full bg-white text-[#090b10] px-6 py-3 text-sm font-medium hover:bg-teal-200 transition-colors">
+            <i data-lucide="mail" class="w-4 h-4"></i><span id="contact-email-text"></span>
+          </a>
+          <button onclick="copyEmail()" id="copy-btn" class="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-mono text-white/70 hover:text-white hover:border-white/30 transition-colors">
+            <i data-lucide="copy" class="w-4 h-4"></i><span>copy</span>
+          </button>
+        </div>
+        <div id="contact-platforms" class="flex items-center justify-center gap-5 mt-10"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="relative px-6 pb-10 pt-4">
+  <div class="mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-white/30 border-t border-white/10 pt-6">
+    <span id="footer-name"></span>
+    <span class="flex items-center gap-2">
+      <span class="h-1.5 w-1.5 rounded-full bg-teal-300 shadow-[0_0_6px_2px_rgba(94,234,212,0.6)]"></span>
+      system.status: online
+    </span>
+  </div>
+</footer>
+
+<script>
+  // ---------- render content from CONFIG ----------
+  document.getElementById('hero-name').textContent = CONFIG.identity.name;
+  document.getElementById('hero-tagline').textContent = CONFIG.identity.tagline;
+  document.getElementById('hero-subline').textContent = CONFIG.identity.subline || '';
+  document.getElementById('footer-name').textContent = '© ' + new Date().getFullYear() + ' ' + CONFIG.identity.name;
+
+  const platformsGrid = document.getElementById('platforms-grid');
+  CONFIG.platforms.forEach((p, i) => {
+    const card = document.createElement('a');
+    card.href = p.href;
+    card.target = '_blank';
+    card.rel = 'noreferrer';
+    card.className = 'tilt-card reveal group relative block rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl overflow-hidden p-6';
+    card.style.transitionDelay = (i * 60) + 'ms';
+    card.innerHTML = `
+      <div class="tilt-glow pointer-events-none absolute inset-0"></div>
+      <div class="relative z-10">
+        <div class="flex items-start justify-between">
+          <div class="h-11 w-11 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-teal-300">
+            <i data-lucide="${p.icon}" class="w-5 h-5"></i>
+          </div>
+          <i data-lucide="external-link" class="w-4 h-4 text-white/25 group-hover:text-white/60 transition-colors mt-1"></i>
+        </div>
+        <div class="mt-6">
+          <div class="text-white text-lg font-medium tracking-tight">${p.label}</div>
+          <div class="text-white/40 text-sm font-mono mt-1">${p.detail}</div>
+        </div>
+      </div>`;
+    addTilt(card);
+    platformsGrid.appendChild(card);
+  });
+
+  function fillList(id, items) {
+    const ul = document.getElementById(id);
+    items.forEach(item => {
+      const li = document.createElement('li');
+      li.className = 'flex gap-3 text-white/70 text-[15px] leading-relaxed';
+      li.innerHTML = `<span class="font-mono text-teal-300/50 select-none">›</span>${item}`;
+      ul.appendChild(li);
+    });
+  }
+  fillList('focus-list', CONFIG.focus);
+  fillList('goals-list', CONFIG.goals);
+  fillList('skills-list', CONFIG.skills);
+
+  const stackGrid = document.getElementById('stack-grid');
+  CONFIG.techStack.forEach((t, i) => {
+    const div = document.createElement('div');
+    div.className = 'reveal group rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-teal-300/30 transition-all duration-300 px-5 py-6 flex flex-col items-center gap-3 text-center hover:-translate-y-1';
+    div.style.transitionDelay = (i * 40) + 'ms';
+    div.innerHTML = `<i data-lucide="${t.icon}" class="w-5 h-5 text-white/60 group-hover:text-teal-300 transition-colors"></i><span class="text-sm text-white/70 font-mono">${t.label}</span>`;
+    stackGrid.appendChild(div);
+  });
+
+  const projectsGrid = document.getElementById('projects-grid');
+  CONFIG.projects.forEach((proj, i) => {
+    const card = document.createElement('div');
+    card.className = 'reveal rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-7 h-full flex flex-col hover:border-white/20 transition-colors duration-300';
+    card.style.transitionDelay = (i * 70) + 'ms';
+    const links = [
+      proj.repoUrl ? `<a href="${proj.repoUrl}" target="_blank" rel="noreferrer" aria-label="${proj.name} repository" class="text-white/40 hover:text-white transition-colors"><i data-lucide="github" class="w-4 h-4"></i></a>` : '',
+      proj.liveUrl ? `<a href="${proj.liveUrl}" target="_blank" rel="noreferrer" aria-label="${proj.name} live link" class="text-white/40 hover:text-white transition-colors"><i data-lucide="external-link" class="w-4 h-4"></i></a>` : ''
+    ].join('');
+    const tags = proj.tech.map(t => `<span class="text-[11px] font-mono tracking-wide uppercase text-teal-300/70 bg-teal-300/[0.06] border border-teal-300/20 rounded-full px-2.5 py-1">${t}</span>`).join('');
+    card.innerHTML = `
+      <div class="flex items-start justify-between gap-4">
+        <h3 class="text-white text-lg font-medium tracking-tight">${proj.name}</h3>
+        <div class="flex items-center gap-3 shrink-0">${links}</div>
+      </div>
+      <p class="text-white/60 text-[15px] leading-relaxed mt-3 flex-1">${proj.description}</p>
+      <div class="flex flex-wrap gap-2 mt-6">${tags}</div>`;
+    projectsGrid.appendChild(card);
+  });
+
+  document.getElementById('contact-note').textContent = CONFIG.contact.note;
+  document.getElementById('contact-email').href = 'mailto:' + CONFIG.contact.email;
+  document.getElementById('contact-email-text').textContent = CONFIG.contact.email;
+  const contactPlatforms = document.getElementById('contact-platforms');
+  CONFIG.platforms.forEach(p => {
+    const a = document.createElement('a');
+    a.href = p.href; a.target = '_blank'; a.rel = 'noreferrer';
+    a.setAttribute('aria-label', p.label);
+    a.className = 'text-white/40 hover:text-teal-300 transition-colors';
+    a.innerHTML = `<i data-lucide="${p.icon}" class="w-5 h-5"></i>`;
+    contactPlatforms.appendChild(a);
+  });
+
+  function copyEmail() {
+    navigator.clipboard.writeText(CONFIG.contact.email).then(() => {
+      const btn = document.getElementById('copy-btn');
+      btn.innerHTML = '<i data-lucide="check" class="w-4 h-4 text-teal-300"></i><span>copied</span>';
+      lucide.createIcons();
+      setTimeout(() => {
+        btn.innerHTML = '<i data-lucide="copy" class="w-4 h-4"></i><span>copy</span>';
+        lucide.createIcons();
+      }, 1800);
+    });
+  }
+
+  lucide.createIcons();
+
+  // ---------- 3D tilt on platform cards ----------
+  function addTilt(card) {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return;
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left, y = e.clientY - rect.top;
+      const cx = rect.width / 2, cy = rect.height / 2;
+      const rotateX = ((y - cy) / cy) * -6;
+      const rotateY = ((x - cx) / cx) * 6;
+      card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02,1.02,1.02)`;
+      const glow = card.querySelector('.tilt-glow');
+      glow.style.background = `radial-gradient(220px circle at ${(x/rect.width)*100}% ${(y/rect.height)*100}%, rgba(94,234,212,0.14), transparent 70%)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+    });
+  }
+
+  // ---------- scroll reveal ----------
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // ---------- hero 3D identity core (Three.js) ----------
+  (function () {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mount = document.getElementById('hero-canvas');
+    if (reduced || typeof THREE === 'undefined') {
+      mount.style.background = 'radial-gradient(circle at 50% 40%, rgba(94,234,212,0.10), transparent 60%), radial-gradient(circle at 60% 60%, rgba(139,127,255,0.10), transparent 55%)';
+      return;
+    }
+    let width = mount.clientWidth, height = mount.clientHeight;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
+    camera.position.z = 7;
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(width, height);
+    mount.appendChild(renderer.domElement);
+
+    const coreGeo = new THREE.IcosahedronGeometry(2.1, 1);
+    const core = new THREE.LineSegments(new THREE.EdgesGeometry(coreGeo), new THREE.LineBasicMaterial({ color: 0x5eead4, transparent: true, opacity: 0.55 }));
+    scene.add(core);
+    const solidCore = new THREE.Mesh(coreGeo, new THREE.MeshBasicMaterial({ color: 0x8b7fff, transparent: true, opacity: 0.04 }));
+    scene.add(solidCore);
+    const shellGeo = new THREE.IcosahedronGeometry(3.1, 0);
+    const shell = new THREE.LineSegments(new THREE.EdgesGeometry(shellGeo), new THREE.LineBasicMaterial({ color: 0x8b7fff, transparent: true, opacity: 0.18 }));
+    scene.add(shell);
+
+    const particleCount = 400;
+    const positions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      const r = 5 + Math.random() * 9, theta = Math.random() * Math.PI * 2, phi = Math.acos(Math.random() * 2 - 1);
+      positions[i*3] = r * Math.sin(phi) * Math.cos(theta);
+      positions[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+      positions[i*3+2] = r * Math.cos(phi);
+    }
+    const particleGeo = new THREE.BufferGeometry();
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const particles = new THREE.Points(particleGeo, new THREE.PointsMaterial({ color: 0xe7e9ee, size: 0.02, transparent: true, opacity: 0.5 }));
+    scene.add(particles);
+
+    let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
+    window.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+    });
+
+    function animate() {
+      targetX += (mouseX - targetX) * 0.02;
+      targetY += (mouseY - targetY) * 0.02;
+      core.rotation.y += 0.0022; core.rotation.x += 0.0009;
+      solidCore.rotation.copy(core.rotation);
+      shell.rotation.y -= 0.0011; shell.rotation.x += 0.0006;
+      particles.rotation.y += 0.0004;
+      camera.position.x = targetX * 0.6;
+      camera.position.y = -targetY * 0.6;
+      camera.lookAt(0, 0, 0);
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      width = mount.clientWidth; height = mount.clientHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    });
+  })();
+</script>
+
+<!-- Anonymous visit logging (no personal identity — see track.js) -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="track.js"></script>
+
+</body>
+</html>
