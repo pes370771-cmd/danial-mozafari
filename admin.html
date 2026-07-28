@@ -52,6 +52,35 @@
   </div>
 </div>
 
+<!-- ================= RESET PASSWORD VIEW ================= -->
+<div id="reset-view" class="hidden min-h-screen flex items-center justify-center px-6">
+  <div class="w-full max-w-sm">
+    <div class="flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase font-mono text-teal-300/70 mb-6 justify-center">
+      <span class="h-1.5 w-1.5 rounded-full bg-teal-300/80 shadow-[0_0_8px_2px_rgba(94,234,212,0.6)]"></span>
+      set new password
+    </div>
+    <div class="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-8">
+      <h1 class="font-display text-2xl text-white tracking-tight mb-6 text-center">Choose a new password</h1>
+      <form id="reset-form" class="space-y-4">
+        <div>
+          <label class="block text-xs font-mono text-white/50 mb-1.5">New password</label>
+          <input id="new-password" type="password" required autocomplete="new-password" minlength="6"
+            class="w-full rounded-lg bg-white/[0.05] border border-white/10 px-4 py-2.5 text-sm text-white outline-none focus:border-teal-300/50 transition-colors" />
+        </div>
+        <div>
+          <label class="block text-xs font-mono text-white/50 mb-1.5">Confirm password</label>
+          <input id="confirm-password" type="password" required autocomplete="new-password" minlength="6"
+            class="w-full rounded-lg bg-white/[0.05] border border-white/10 px-4 py-2.5 text-sm text-white outline-none focus:border-teal-300/50 transition-colors" />
+        </div>
+        <p id="reset-error" class="text-sm text-red-400 hidden"></p>
+        <button type="submit" class="w-full rounded-lg bg-white text-[#090b10] px-4 py-2.5 text-sm font-medium hover:bg-teal-200 transition-colors">
+          Save password
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
 <!-- ================= DASHBOARD VIEW ================= -->
 <div id="dashboard-view" class="hidden">
   <nav class="border-b border-white/10">
@@ -80,9 +109,16 @@
               <tr class="text-left text-white/40 font-mono text-xs uppercase tracking-wide border-b border-white/10">
                 <th class="px-4 py-3">Time</th>
                 <th class="px-4 py-3">Source</th>
+                <th class="px-4 py-3">Referrer</th>
                 <th class="px-4 py-3">Country</th>
                 <th class="px-4 py-3">Device</th>
+                <th class="px-4 py-3">Model</th>
+                <th class="px-4 py-3">OS</th>
                 <th class="px-4 py-3">Browser</th>
+                <th class="px-4 py-3">Screen</th>
+                <th class="px-4 py-3">Language</th>
+                <th class="px-4 py-3">Timezone</th>
+                <th class="px-4 py-3"></th>
               </tr>
             </thead>
             <tbody id="visits-table-body"></tbody>
@@ -101,6 +137,7 @@
             <thead>
               <tr class="text-left text-white/40 font-mono text-xs uppercase tracking-wide border-b border-white/10">
                 <th class="px-4 py-3">Time</th>
+                <th class="px-4 py-3">Email</th>
                 <th class="px-4 py-3">Device</th>
                 <th class="px-4 py-3">Browser</th>
               </tr>
@@ -121,18 +158,49 @@
 
     const loginView = document.getElementById('login-view');
     const dashboardView = document.getElementById('dashboard-view');
+    const resetView = document.getElementById('reset-view');
     const loginForm = document.getElementById('login-form');
     const loginError = document.getElementById('login-error');
+    const resetForm = document.getElementById('reset-form');
+    const resetError = document.getElementById('reset-error');
+    let inRecovery = false;
+
+    function showReset() {
+      loginView.classList.add('hidden');
+      dashboardView.classList.add('hidden');
+      resetView.classList.remove('hidden');
+      lucide.createIcons();
+    }
 
     function detectDevice() {
       const ua = navigator.userAgent;
       const isMobile = /Mobi|Android|iPhone|iPad/i.test(ua);
       let browser = "other";
       if (ua.includes("Edg")) browser = "Edge";
+      else if (ua.includes("OPR") || ua.includes("Opera")) browser = "Opera";
       else if (ua.includes("Chrome")) browser = "Chrome";
       else if (ua.includes("Firefox")) browser = "Firefox";
       else if (ua.includes("Safari")) browser = "Safari";
-      return { type: isMobile ? "mobile" : "desktop", browser };
+
+      let os = "other", osVersion = "";
+      if (/Windows NT ([\d.]+)/.test(ua)) { os = "Windows"; osVersion = RegExp.$1; }
+      else if (/iPhone OS ([\d_]+)/.test(ua)) { os = "iOS"; osVersion = RegExp.$1.replace(/_/g, "."); }
+      else if (/iPad.*OS ([\d_]+)/.test(ua)) { os = "iPadOS"; osVersion = RegExp.$1.replace(/_/g, "."); }
+      else if (/Android ([\d.]+)/.test(ua)) { os = "Android"; osVersion = RegExp.$1; }
+      else if (ua.includes("Mac OS X")) { os = "macOS"; const m = ua.match(/Mac OS X ([\d_]+)/); osVersion = m ? m[1].replace(/_/g, ".") : ""; }
+      else if (ua.includes("Linux")) { os = "Linux"; }
+
+      return { type: isMobile ? "mobile" : "desktop", browser, os, osVersion };
+    }
+
+    async function detectModel() {
+      try {
+        if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+          const hints = await navigator.userAgentData.getHighEntropyValues(["model"]);
+          return hints.model || null;
+        }
+      } catch {}
+      return null;
     }
 
     function fmtTime(iso) {
@@ -172,12 +240,29 @@
         tr.innerHTML = `
           <td class="px-4 py-3 font-mono text-xs whitespace-nowrap">${fmtTime(row.created_at)}</td>
           <td class="px-4 py-3">${row.source || '—'}</td>
+          <td class="px-4 py-3 max-w-[180px] truncate" title="${row.referrer_raw || ''}">${row.referrer_raw || '—'}</td>
           <td class="px-4 py-3">${row.country || '—'}</td>
           <td class="px-4 py-3">${row.device || '—'}</td>
-          <td class="px-4 py-3">${row.browser || '—'}</td>`;
+          <td class="px-4 py-3">${row.device_model || '—'}</td>
+          <td class="px-4 py-3">${(row.os || '—') + (row.os_version ? ' ' + row.os_version : '')}</td>
+          <td class="px-4 py-3">${row.browser || '—'}</td>
+          <td class="px-4 py-3 font-mono text-xs">${row.screen_res || '—'}</td>
+          <td class="px-4 py-3 font-mono text-xs">${row.language || '—'}</td>
+          <td class="px-4 py-3 font-mono text-xs">${row.timezone || '—'}</td>
+          <td class="px-4 py-3"><button data-id="${row.id}" class="delete-visit-btn text-white/30 hover:text-red-400 transition-colors" aria-label="Delete visit"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td>`;
         tbody.appendChild(tr);
       });
 
+      tbody.querySelectorAll('.delete-visit-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (!confirm('Delete this visit entry?')) return;
+          const id = btn.getAttribute('data-id');
+          await client.from('visits').delete().eq('id', id);
+          loadVisits();
+        });
+      });
+
+      lucide.createIcons();
       renderSummary(data);
     }
 
@@ -222,7 +307,8 @@
         tr.className = 'border-b border-white/5 text-white/70';
         tr.innerHTML = `
           <td class="px-4 py-3 font-mono text-xs whitespace-nowrap">${fmtTime(row.created_at)}</td>
-          <td class="px-4 py-3">${row.device || '—'}</td>
+          <td class="px-4 py-3">${row.email || '—'}</td>
+          <td class="px-4 py-3">${row.device || '—'}${row.device_model ? ' (' + row.device_model + ')' : ''}${row.os ? ' — ' + row.os + (row.os_version ? ' ' + row.os_version : '') : ''}</td>
           <td class="px-4 py-3">${row.browser || '—'}</td>`;
         tbody.appendChild(tr);
       });
@@ -242,8 +328,46 @@
       }
 
       const device = detectDevice();
-      await client.from('admin_logins').insert({ device: device.type, browser: device.browser });
+      const model = await detectModel();
+      await client.from('admin_logins').insert({
+        email: email,
+        device: device.type,
+        device_model: model,
+        os: device.os,
+        os_version: device.osVersion,
+        browser: device.browser
+      });
 
+      showDashboard();
+    });
+
+    resetForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      resetError.classList.add('hidden');
+      const p1 = document.getElementById('new-password').value;
+      const p2 = document.getElementById('confirm-password').value;
+
+      if (p1 !== p2) {
+        resetError.textContent = 'Passwords do not match.';
+        resetError.classList.remove('hidden');
+        return;
+      }
+      if (p1.length < 6) {
+        resetError.textContent = 'Password must be at least 6 characters.';
+        resetError.classList.remove('hidden');
+        return;
+      }
+
+      const { error } = await client.auth.updateUser({ password: p1 });
+      if (error) {
+        resetError.textContent = error.message;
+        resetError.classList.remove('hidden');
+        return;
+      }
+
+      inRecovery = false;
+      resetView.classList.add('hidden');
+      resetForm.reset();
       showDashboard();
     });
 
@@ -254,9 +378,19 @@
       loginForm.reset();
     });
 
+    // A password-recovery link logs the user in automatically — catch
+    // that specific event and show the "set new password" form instead
+    // of jumping straight to the dashboard.
+    client.auth.onAuthStateChange((event) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        inRecovery = true;
+        showReset();
+      }
+    });
+
     // Already-signed-in session (e.g. page refresh)
     client.auth.getSession().then(({ data }) => {
-      if (data.session) showDashboard();
+      if (data.session && !inRecovery) showDashboard();
     });
 
     lucide.createIcons();
